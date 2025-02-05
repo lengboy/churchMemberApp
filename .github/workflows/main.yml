@@ -1,33 +1,34 @@
 name: Build Windows EXE
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+on: [push, pull_request]
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.11
+          python-version: "3.11"
 
       - name: Install Dependencies
         run: |
-          python -m pip install --upgrade pip
           pip install pyinstaller
 
       - name: Build EXE
-        run: pyinstaller --onefile --windowed vic.py
+        run: |
+          pyinstaller --onefile vic.py
+
+      - name: Upload EXE as Artifact
+        uses: actions/upload-artifact@v4  # Updated to v4
+        with:
+          name: ChurchMemberApp
+          path: dist/vic.exe
+
 
       - name: Upload EXE as Artifact
         uses: actions/upload-artifact@v3
