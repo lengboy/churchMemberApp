@@ -29,9 +29,3 @@ jobs:
           name: ChurchMemberApp
           path: dist/vic.exe
 
-
-      - name: Upload EXE as Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ChurchMemberApp
-          path: dist/vic.exe
